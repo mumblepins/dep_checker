@@ -361,7 +361,7 @@ def check_imports(
 	if namespace_packages is None:
 		namespace_packages = NamespacePackages.get(config)
 
-	work_dir = PathPlus(work_dir)
+	work_dir = PathPlus(work_dir).resolve()
 	req_file = PathPlus(req_file)
 
 	if not req_file.is_absolute():
