@@ -32,10 +32,11 @@ import re
 import sys
 from collections import defaultdict
 from operator import attrgetter
-from typing import Any, Dict, Iterable, Iterator, List, Mapping, NamedTuple, Optional, Set, Tuple, Type, Union
+from typing import Any, Dict, Iterable, Iterator, List, Mapping, NamedTuple, Optional, Set, Type, Union
 
 # 3rd party
 import click
+import dom_toml
 from consolekit.terminal_colours import Fore, resolve_color_default
 from domdf_python_tools.paths import PathPlus, in_directory
 from domdf_python_tools.typing import PathLike
@@ -366,10 +367,16 @@ def check_imports(
 
 	if not req_file.is_absolute():
 		req_file = work_dir / req_file
+	if req_file.name == "pyproject.toml":
+		requirements = [
+				a for a in dom_toml.load(req_file)["tool"]["poetry"]["dependencies"].keys() if a != "python"
+				]
+	else:
+		requirements = map(attrgetter("name"), read_requirements(req_file)[0])
 
 	checker = DepChecker(
 			pkg_name,
-			requirements=map(attrgetter("name"), read_requirements(req_file)[0]),
+			requirements=requirements,
 			allowed_unused=allowed_unused,
 			name_mapping=name_mapping,
 			namespace_packages=namespace_packages,
