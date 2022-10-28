@@ -39,7 +39,7 @@ from consolekit.utils import abort
 # this package
 from dep_checker import check_imports
 
-__all__ = ["main"]
+__all__ = ("main", )
 
 
 @colour_option()
@@ -75,7 +75,7 @@ def main(
 		allowed_unused: Optional[List[str]],
 		colour: Optional[bool],
 		work_dir: str = '.',
-		):
+		) -> None:
 	"""
 	Tool to check all requirements are actually required.
 	"""

@@ -52,7 +52,7 @@ __license__: str = "MIT License"
 __version__: str = "0.7.0"
 __email__: str = "dominic@davis-foster.co.uk"
 
-__all__ = [
+__all__ = (
 		"template",
 		"check_imports",
 		"DepChecker",
@@ -60,7 +60,7 @@ __all__ = [
 		"UnlistedRequirement",
 		"UnusedRequirement",
 		"make_requirement_tuple",
-		]
+		)
 
 #: The template to use when printing output.
 template = "{name} imported on line {lineno} of {filename}"
@@ -72,7 +72,7 @@ NODEP = re.compile(r".*#\s*nodep.*")
 _nt_types = Union[Type["PassingRequirement"], Type["UnlistedRequirement"], Type["UnusedRequirement"]]
 
 
-def _nt_asdict_class_deco(nt: _nt_types):
+def _nt_asdict_class_deco(nt: _nt_types) -> _nt_types:
 	original_asdict = nt._asdict
 
 	def _asdict(self) -> Dict[str, Any]:
@@ -88,7 +88,7 @@ def _nt_asdict_class_deco(nt: _nt_types):
 
 	_asdict.__module__ = nt.__module__
 	_asdict.__qualname__ = f"{nt.__name__}._asdict"
-	nt._asdict = _asdict  # type: ignore
+	nt._asdict = _asdict  # type: ignore[assignment]
 
 	return nt
 
@@ -118,7 +118,7 @@ def make_requirement_tuple(data: Dict[str, Any]) -> _nt_types:
 			cls = class_obj
 			break
 	else:
-		raise ValueError(f"Unknown requirement class {class_name!r}")
+		raise ValueError(f"Unknown requirement class {class_name!r}")  # pylint: disable=loop-invariant-statement
 
 	return cls(**data)
 
@@ -235,7 +235,7 @@ class DepChecker:
 
 		for name in namespace_packages or ():
 			namespace, pkg = name.rsplit('.')
-			self.namespace_packages[namespace].append(pkg)
+			self.namespace_packages[namespace].append(pkg)  # pylint: disable=loop-invariant-statement
 
 	def check(
 			self,
@@ -374,6 +374,9 @@ def check_imports(
 	else:
 		requirements = map(attrgetter("name"), read_requirements(req_file)[0])
 
+	req_file = req_file.abspath()
+	work_dir = work_dir.abspath()
+
 	checker = DepChecker(
 			pkg_name,
 			requirements=requirements,
@@ -382,9 +385,9 @@ def check_imports(
 			namespace_packages=namespace_packages,
 			)
 
-	def echo(text: str):
+	def echo(text: str) -> None:
 		text = text.encode(sys.stdout.encoding, errors="ignore").decode(sys.stdout.encoding)
-		return click.echo(text, color=colour)
+		click.echo(text, color=colour)
 
 	for item in checker.check(work_dir):
 		if isinstance(item, PassingRequirement):

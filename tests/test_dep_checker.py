@@ -61,6 +61,20 @@ def test_cli_package(package_project: PathPlus, file_regression: FileRegressionF
 	assert result.exit_code == 1
 
 
+def test_cli_package_srcdir(package_project: PathPlus, file_regression: FileRegressionFixture):
+	(package_project / "my_project").move(package_project / "src" / "my_project")
+
+	with in_directory(package_project):
+		runner = CliRunner()
+		result: Result = runner.invoke(
+				main,
+				args=["my_project", "--no-colour", "--work-dir", "src", "--req-file", "../requirements.txt"],
+				)
+
+	result.check_stdout(file_regression)
+	assert result.exit_code == 1
+
+
 @pytest.mark.parametrize(
 		"config",
 		[

@@ -4,23 +4,30 @@ modname: 'dep_checker'
 copyright_years: '2020-2021'
 author: 'Dominic Davis-Foster'
 email: 'dominic@davis-foster.co.uk'
-username: 'domdfcoding'
+username: 'python-coincidence'
+assignee: 'domdfcoding'
 version: '0.7.0'
 license: 'MIT'
 short_desc: 'Tool to check all requirements are actually required.'
 
 enable_conda: false
 use_whey: true
+min_coverage: 98
 preserve_custom_theme: true
+sphinx_html_theme: furo
+docs_fail_on_warning: true
 
 python_versions:
  - 3.6
  - 3.7
  - 3.8
  - 3.9
- - 3.10-dev
+ - '3.10'
+ - 3.11-dev
  - pypy36
  - pypy37
+ - pypy38
+ - pypy39
 
 console_scripts:
  - dep-checker = dep_checker.__main__:main
@@ -29,8 +36,10 @@ console_scripts:
 extra_sphinx_extensions:
  - sphinx_click
  - sphinx_toolbox.pre_commit
- - sphinx_toolbox_experimental.html_section
- - sphinx_toolbox_experimental.autosummary_widths
+ - sphinx_toolbox.more_autosummary.column_widths
+
+sphinx_conf_epilogue:
+ - nitpicky = True
 
 classifiers:
  - 'Development Status :: 4 - Beta'
@@ -41,9 +50,6 @@ keywords:
  - dependencies
  - linter
  - pre-commit
-
-min_coverage: 98
-sphinx_html_theme: furo
 
 exclude_files:
  - contributing

@@ -58,7 +58,8 @@ dep_checker
 		:workflow: mypy
 		:alt: mypy status
 
-	.. |requires| requires-io-shield::
+	.. |requires| image:: https://dependency-dash.repo-helper.uk/github/python-coincidence/dep_checker/badge.svg
+		:target: https://dependency-dash.repo-helper.uk/github/python-coincidence/dep_checker/
 		:alt: Requirements Status
 
 	.. |coveralls| coveralls-shield::
@@ -103,7 +104,7 @@ dep_checker
 		:last-commit:
 		:alt: GitHub last commit
 
-	.. |maintained| maintained-shield:: 2021
+	.. |maintained| maintained-shield:: 2022
 		:alt: Maintenance
 
 	.. |pypi-downloads| pypi-shield::
@@ -140,6 +141,7 @@ Contents
 	usage
 	api
 	Source
+	license
 
 
 .. sidebar-links::
@@ -155,6 +157,6 @@ Contents
 
 	View the :ref:`Function Index <genindex>` or browse the `Source Code <_modules/index.html>`__.
 
-	:github:repo:`Browse the GitHub Repository <domdfcoding/dep_checker>`
+	:github:repo:`Browse the GitHub Repository <python-coincidence/dep_checker>`
 
 .. end links

@@ -28,7 +28,6 @@ Functions to read configuration.
 
 # stdlib
 import re
-from collections import defaultdict
 from configparser import ConfigParser
 from typing import Any, Callable, Dict, List, Optional
 
@@ -38,7 +37,7 @@ from configconfig.configvar import ConfigVar
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
 
-__all__ = ["AllowedUnused", "NameMapping", "ConfigReader", "NamespacePackages"]
+__all__ = ("AllowedUnused", "NameMapping", "ConfigReader", "NamespacePackages")
 
 
 def list_from_string(string: str) -> List[str]:

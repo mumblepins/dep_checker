@@ -2,7 +2,12 @@
 ---
 name: "Docs Check"
 on:
-  - push
+  push:
+    branches-ignore:
+      - 'repo-helper-update'
+      - 'pre-commit-ci-update-config'
+      - 'imgbot'
+  pull_request:
 
 permissions:
   contents: read
@@ -12,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: "actions/checkout@v1"
+        uses: "actions/checkout@v2"
 
       - name: Check for changed files
         uses: dorny/paths-filter@v2
@@ -29,4 +34,4 @@ jobs:
         with:
           pre-build-command: python -m pip install tox
           docs-folder: "doc-source/"
-          build-command: "tox -e docs -- "
+          build-command: "tox -e docs -- -W "
