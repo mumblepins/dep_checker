@@ -63,7 +63,7 @@ __all__ = (
 		)
 
 #: The template to use when printing output.
-template = "{name} imported on line {lineno} of {filename}"
+template = "{filename}:{lineno} imports {name}"
 
 reader = ConfigReader("dep_checker", default_factory=dict)
 
@@ -143,7 +143,7 @@ class PassingRequirement(NamedTuple):
 		Format the error (or, in this case, success) message.
 		"""
 
-		return f"✔ {template.format_map(self._asdict())}"
+		return f"{template.format_map(self._asdict())}"
 
 
 @_nt_asdict_class_deco
@@ -166,7 +166,7 @@ class UnlistedRequirement(NamedTuple):
 		Format the error message.
 		"""
 
-		return f"✘ {template.format_map(self._asdict())} but not listed as a requirement"
+		return f"{template.format_map(self._asdict())} but not listed as a requirement"
 
 
 @_nt_asdict_class_deco
@@ -185,7 +185,7 @@ class UnusedRequirement(NamedTuple):
 		Format the error message.
 		"""
 
-		return f"✘ {self.name} never imported"
+		return f"{self.name} never imported"
 
 
 class DepChecker:
